@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load censor %}
+<head>
+    <meta charset="UTF-8">
+    <title>Posts by Category</title>
+</head>
+<body>
+    <h1>Posts in Category: {{ category.name }}</h1>
+
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'all_posts' %}">Все категории</a></li>
+            {% for category in Category.objects.all %}
+                <li><a href="{% url 'posts_by_category' category.id %}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.text|slice:":124" }}...</p>
+                <p>Author: {{ post.author.user.username }}</p>
+                <p>Rating: {{ post.rating }}</p>
+                <p>Likes: {{ post.rating }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
