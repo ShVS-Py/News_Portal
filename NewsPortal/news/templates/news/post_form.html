@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+{% block content %}
+<h1>Добавить статью</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="{% url 'news_moderation' %}">Назад</a>
+
+<li><a href="{% url 'all_posts' %}">На главную</a></li>
+{% endblock %}
