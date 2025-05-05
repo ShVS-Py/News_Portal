@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% block content %}
+<h1>Новости</h1>
+<ul>
+    {% for item in news_paginated %}
+        <li>
+            <h3><a href="{% url 'news_detail' item.pk %}">{{ item.title }}</a></h3>
+            <p><strong>Автор:</strong> {{ item.author }}</p>
+            <p><strong>Дата публикации:</strong> {{ item.published_date }}</p>
+            <p>{{ item.content|truncatewords:3 }}</p>
+        </li>
+    {% endfor %}
+</ul>
+<nav>
+
+    <h3>{{ item.title }} <a href="{% url 'news_search' %}" style="color: green; font-weight: bold;">Поиск новостей</a></h3>
+    <h3>{{ item.title }}<a href="{% url 'all_posts' %}" style="color: red; font-weight: bold;">Вернуться на главную страницу</a>
+</nav>
+<div class="pagination">
+    {% if news_paginated.has_previous %}
+
+        <a href="?page={{ news_paginated.previous_page_number }}">Назад</a>
+    {% endif %}
+
+    {% for num in news_paginated.paginator.page_range %}
+        {% if num >= news_paginated.number|add:-2 and num <= news_paginated.number|add:2 %}
+            {% if num == news_paginated.number %}
+                <strong>{{ num }}</strong>
+            {% else %}
+                <a href="?page={{ num }}">{{ num }}</a>
+
+            {% endif %}
+        {% endif %}
+
+    {% endfor %}
+
+    {% if news_paginated.has_next %}
+        <a href="?page={{ news_paginated.next_page_number }}">Вперёд</a>
+        <a href="?page={{ news_paginated.paginator.num_pages }}">Назад</a>
+    {% endif %}
+</div>
+
+{% endblock %}

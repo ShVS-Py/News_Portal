@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+{% block content %}
+  <h1>Профиль пользователя {{ user.username }}</h1>
+
+  {% if is_author %}
+    <p>Вы состоите в группе авторов ✅</p>
+  {% else %}
+    <p>Вы не являетесь автором. <a href="{% url 'become_author' %}">Стать автором</a></p>
+  {% endif %}
+
+  <p><a href="{% url 'account_logout' %}">Выйти из профиля</a></p>
+
+<a href="{% url 'news_list' %}">Вернуться к списку новостей</a>
+{% endblock %}
